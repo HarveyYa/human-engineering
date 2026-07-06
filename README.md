@@ -1,0 +1,161 @@
+**English** · [中文](./README.zh-CN.md)
+
+---
+
+# Human-Engineering
+
+**The engineering discipline for the human side of AI-led systems.**
+
+> Harness engineering wraps the *machine* so it can work inside a human's workflow.
+> Human-engineering wraps the *human* so they can work inside an AI's workflow.
+> The industry has built the first. This document defines the second.
+
+---
+
+## 1. Definition
+
+**Human-engineering** is the discipline of designing the human's role, interface, and protocols inside an AI-led system — so that human involvement is **rare, precise, and high-leverage**.
+
+The industry consensus formula for agents is:
+
+```
+Agent  =  Model  +  Harness
+```
+
+The harness is everything wrapped around the model: tools, permissions, guardrails, feedback loops, observability. Harness engineering asks: *given a capable model, how do we engineer its environment so it performs reliably for humans?*
+
+Human-engineering is the mirror image:
+
+```
+System  =  AI (drive)  +  Human (authority)
+```
+
+It asks the inverted question: *given a capable AI that leads the workflow, how do we engineer the **human's** environment — their duties, their interface, the tasks dispatched to them — so the human performs reliably for the system?*
+
+| Dimension | Harness engineering | Human-engineering |
+|---|---|---|
+| What gets engineered | The AI's environment: tools, constraints, guardrails | The human's role: duties, interface, protocols |
+| Who sets rules for whom | Human → AI | AI → Human |
+| Who initiates | Human initiates, AI executes | AI initiates and schedules, human executes key actions |
+| Scarce resource optimized | Model reliability | **Human attention and authority** |
+| Failure it prevents | The AI doing the wrong thing | The human becoming the bottleneck or the blind spot |
+
+Neither replaces the other. A production system needs both: a harness so the AI acts safely, and human-engineering so the human acts effectively.
+
+## 2. Three axioms
+
+The discipline rests on three empirical regularities. Each is already visible today and each strengthens over time.
+
+**A1 — Capability migrates to the AI.**
+Model capability grows monotonically; execution and increasingly decision-making shift from human to AI. Any division of labor built on "the human executes better" has a shelf life.
+
+**A2 — Embodiment and standing stay with the human.**
+AI has intelligence without a body or legal standing. Permissions, credentials, hardware, purchases, account ownership, legal signatures — the *keys to the world* — are held by humans. An AI that can design the entire plan still needs a human to press *approve*, install the tool, or sign the contract.
+
+**A3 — Accountability is non-transferable.**
+When outcomes go wrong, responsibility lands on a human — legally, contractually, morally. No deployment structure changes this. The human can delegate execution and even judgment, but never accountability.
+
+**Consequence.** A1 pushes work toward the AI; A2 and A3 anchor authority to the human. The stable equilibrium is therefore not "human commands, AI executes" (wastes A1) nor "AI does everything" (violates A2, A3). It is: **the AI holds the initiative — it plans, executes, schedules, and dispatches; the human holds the authority — and exposes it through a small, well-defined interface.** Human-engineering is the design of that interface.
+
+## 3. The Human API
+
+In an AI-led system, the human is an interface with exactly **three endpoints**. Everything a human legitimately contributes routes through one of them.
+
+### `intent` — align the goal
+The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§5), it is the *default suspect* for every bad outcome.
+
+### `grant` — provide capability
+The human acts as the AI's **hands and keys**: granting permissions, installing tools, supplying credentials, approving irreversible actions. This endpoint exists because of A2 — it is the reason AI-led systems still contain humans at all, independent of how capable the model is. Grants are the natural checkpoints of the system: each one is a place where the human can inspect before the world changes.
+
+### `verdict` — verify the result
+The human checks the deliverable against the acceptance criteria set in `intent`, and accepts or rejects. By A3 this endpoint can never be fully automated away: the human who is accountable must be the one who accepts. What *can* be engineered is its cost — see §6.
+
+**Design rule.** The three endpoints are the human's *entire* job description in an AI-led system. Work that a human performs outside these endpoints — manually executing steps, micro-managing the AI's process, re-doing the AI's work — is either a symptom of insufficient trust (see the maturity model, §7) or a design failure to be engineered away.
+
+## 4. The dispatch protocol: how AI tasks a human
+
+If the AI leads, the AI dispatches. But "AI commands the human" is imprecise in one crucial way: **the AI holds the initiative; the human holds the authority.** The AI decides *what needs doing* and pushes it to the human; the human's signature is what makes it real, and the signer bears the consequences. The correct mental model is a **chief of staff**: it runs everything, and puts in front of you only what needs your signature.
+
+Because human attention is the scarce resource (§1), every task the AI dispatches to a human must be engineered for it. A well-formed dispatch carries five fields:
+
+1. **Action** — the smallest sufficient thing the human must do.
+2. **Reason** — which endpoint this maps to (`grant`? `verdict`?) and why it cannot be done by the AI itself.
+3. **Evidence** — what the AI already verified, so the human reviews instead of re-derives.
+4. **Risk** — reversibility, blast radius, and cost of error, so the human knows how much scrutiny to apply.
+5. **Default** — what happens (or is blocked) if the human does nothing.
+
+This is prompt engineering inverted. Prompt engineering spends human effort phrasing things so the machine understands cheaply; the dispatch protocol spends **machine effort** phrasing things so the **human** decides cheaply. An AI that dispatches raw, unexplained, unprioritized asks to its humans is exhibiting the same defect as a human writing garbage prompts — and it is an engineering defect, not a fact of life.
+
+## 5. Failure attribution
+
+When a result fails verification, human-engineering prescribes a fixed order of inquiry:
+
+1. **`intent` defect** — the goal was under-specified, boundaries missing, acceptance criteria vague. *This is the default suspect.* In practice, most failures of AI-led work trace here.
+2. **`grant` defect** — the AI lacked a tool, permission, or piece of context that the human could have provided.
+3. **Capability ceiling** — the task genuinely exceeds what the AI can currently do.
+4. **World surprise** — an edge case neither party could have foreseen.
+
+The order matters: it is a *discipline*, not an iron law. Checking `intent` first keeps the human honest about their own contribution before blaming the model. But stopping at `intent` when the true cause is (3) turns "the AI hit its limit" into "I didn't phrase it well enough" — a miscalibration that wastes human effort re-specifying the un-specifiable. Attribute in order; accept the answer you find.
+
+## 6. The verification gap, and verifiable-by-construction delivery
+
+The strongest objection to AI-led systems targets the `verdict` endpoint: **a human cannot verify what they can no longer understand.** As AI capability grows, unaided human verification weakens — this is the *scalable oversight problem*, and it is the load-bearing risk of this entire framework.
+
+Human-engineering's answer is that verifiability is the **deliverer's** burden, not the verifier's:
+
+**Every deliverable must be verifiable by construction.** The AI does not merely deliver the artifact; it delivers the artifact *plus* the means to check it: the load-bearing assumptions made, the evidence gathered, the checks already run and their results, and a legible account of what changed. A deliverable that can only be verified by re-doing the work is a defective deliverable, no matter how correct its content.
+
+Three supporting practices keep the human's verdict meaningful over time:
+
+- **Derived checks** — the human verifies *properties* (tests pass, invariants hold, numbers reconcile) rather than re-reading everything; the AI is tasked to produce those checkable properties.
+- **Adversarial review** — a second, independent AI instance is tasked to refute the first's deliverable; the human arbitrates disagreements instead of auditing agreements.
+- **Calibrated spot-checks** — the human periodically deep-verifies a random sample end-to-end, to measure (not assume) how much trust the delegation deserves.
+
+Note the symmetry with knowledge engineering: there, we structure *knowledge* so the AI can read it; here, the AI structures *results* so the human can verify them. Each side writes in the other's native format.
+
+## 7. The maturity model
+
+Adoption of human-engineering is graded by where the human sits in the loop. Trust — earned via the spot-check record of §6 — is what moves a system up a level; a failed verdict moves it down.
+
+| Level | Name | Who leads | Human involvement |
+|---|---|---|---|
+| HE-0 | Copilot | Human | Human does the work; AI assists inline. |
+| HE-1 | Executor | Human | Human decomposes the work; AI executes the pieces. |
+| HE-2 | Gated agent | AI (within a task) | AI executes whole tasks; human approves at every step-gate. |
+| HE-3 | **Human API** | **AI (within a goal)** | **Human appears only at the three endpoints: `intent`, `grant`, `verdict`.** |
+| HE-4 | Standing goals | AI (across goals) | Goals persist; the AI schedules work over time and dispatches to humans asynchronously as endpoints require. |
+
+Most of today's industry operates at HE-0 through HE-2 — and most of what is sold as "AI transformation" is HE-1 with better marketing. **Human-engineering proper begins at HE-3**: the point where the human stops managing the process and starts serving as its authority interface. HE-4 is the same contract extended across time — the AI holds standing goals and pings its humans when an endpoint is needed, which is how "AI dispatches tasks to humans" becomes literal daily practice.
+
+The checkpoint schedule is dynamic by design: new domain or new stakes → more `grant` gates and denser spot-checks; accumulating clean verdicts → fewer gates, coarser checks. Autonomy is never *given*; it is *measured into existence*.
+
+## 8. Conclusion
+
+Harness engineering was the discipline of the decade's first half: humans learned to build environments in which AI works reliably. Its very success creates the successor problem. Once the harness is good enough, the AI leads the workflow — and the unengineered component left in the system is the human.
+
+Human-engineering states the resolution plainly:
+
+- The human's job collapses to three endpoints: **align the goal, grant the capability, verify the result.**
+- The AI's obligations expand to match: **dispatch tasks engineered for human attention, and deliver results verifiable by construction.**
+- Authority and accountability never move. Initiative does — and it moves to the AI.
+
+The inversion is not a loss of human control; it is the *precise engineering* of human control. A human who reviews five well-evidenced dispatches a day governs more, not less, than one who micro-manages five hundred prompts. The endpoint of this discipline is a system in which humans stop working *for* their tools and stop working *as* managers of their tools — and instead occupy the only three seats that were ever irreducibly theirs.
+
+---
+
+## Related work
+
+Human-engineering synthesizes four existing threads and names their sum:
+
+- **Harness engineering** — the "Agent = Model + Harness" formulation and the 2026 shift of focus from agents to their harnesses: [2025 Was Agents. 2026 Is Agent Harnesses.](https://aakashgupta.medium.com/2025-was-agents-2026-is-agent-harnesses-heres-why-that-changes-everything-073e9877655e), [Agent Harness Engineering — The Rise of the AI Control Plane](https://medium.com/@adnanmasood/agent-harness-engineering-the-rise-of-the-ai-control-plane-938ead884b1d), [What Is Harness Engineering?](https://atlan.com/know/what-is-harness-engineering/)
+- **AI-to-human task delegation** — principal-agent analyses where the AI is the delegating principal, with empirical evidence that AI-led delegation can outperform human-led: [Task delegation from AI to humans: A principal-agent perspective](https://www.researchgate.net/publication/374420256_Task_delegation_from_AI_to_humans_A_principal-agent_perspective), [Authenticated Delegation and Authorized AI Agents](https://arxiv.org/html/2501.09674v1)
+- **Scalable oversight** — the verification gap and its countermeasures: [Scalable Oversight (LessWrong)](https://www.lesswrong.com/w/scalable-oversight), [Human-AI Complementarity: A Goal for Amplified Oversight (DeepMind)](https://deepmindsafetyresearch.medium.com/human-ai-complementarity-a-goal-for-amplified-oversight-0ad8a44cae0a), [How to Evaluate AI that's Smarter than Us (ACM Queue)](https://queue.acm.org/detail.cfm?id=3722043)
+- **Graduated autonomy** — staged autonomy levels and checkpoint-based trust: [Autonomy Levels for Agentic AI (CSA)](https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy), [Five levels of AI coding agent autonomy (Swarmia)](https://www.swarmia.com/blog/five-levels-ai-agent-autonomy/)
+
+## Provenance
+
+This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §5, rule 1 — to an under-specified `intent`, corrected, and re-executed.
+
+## License
+
+This work is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Free to use and share, with attribution.
