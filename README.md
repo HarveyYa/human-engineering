@@ -12,19 +12,11 @@
 
 ---
 
-## The theory in one story
-
-This repository was built the way the document below says systems should run, so its own history is the fastest explanation.
-
-A human wanted a theory written and published. He did not write it, plan it, or manage the work. He did exactly three things. He said what he wanted and what "done" would look like — that is **`intent`**. He logged in to GitHub, installed the tools, approved the publishing — that is **`grant`**. He read what came back and said "yes," or pointed at what was wrong — that is **`verdict`**. The AI did everything else: research, writing, translation, repository setup. And whenever it needed something only the human could give — a permission, a decision with lasting consequences — it sent back a short, fully-explained request, never a raw question.
-
-When a result missed, the first suspect was the goal statement, not the AI's effort. When the human caught the AI silently carrying an old decision (a license) into a changed situation, the catch became a standing rule. When the human said "parts of this I can't understand," that verdict — by this document's own rules — indicted the document, not the reader. This section exists because of it.
-
-Everything below is that pattern, stated precisely.
-
 ## 1. Definition
 
 **Human-engineering** is the discipline of designing the human's role, interface, and protocols inside an AI-led system — so that human involvement is **rare, precise, and high-leverage**.
+
+Its subject matter in one sentence: **a human and an AI completing a task goal together, with the AI leading as the premise — the human's work reduced to a standard form, and even the human's instructions subject to optimization and correction (§3).**
 
 The industry consensus formula for agents is:
 
@@ -203,7 +195,7 @@ Human-engineering synthesizes four existing threads and names their sum:
 
 ## Provenance
 
-This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives. And the plain-story section at the top exists because the human said "parts of this I can't understand" — a verdict that, by §7, indicted the document rather than the reader — and then pointed out that asking him to locate the unclear passages was itself a violation: diagnosing a defective delivery is the deliverer's work.
+This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives. And the legibility law in §7 exists because the human said "parts of this I can't understand" — a verdict that, by §7's own logic, indicted the document rather than the reader — and then pointed out that asking him to locate the unclear passages was itself a violation: diagnosing a defective delivery is the deliverer's work. The fix became law and inline glosses, not a longer document.
 
 ## License
 
