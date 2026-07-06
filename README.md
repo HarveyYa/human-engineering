@@ -143,6 +143,20 @@ The inversion is not a loss of human control; it is the *precise engineering* of
 
 ---
 
+## Reference implementation
+
+This repository ships the protocol as a working [Claude Code skill](./skill/SKILL.md): it enforces Phase-gated execution — `intent` alignment (no execution while disagreement remains), five-field dispatches for every human ask, verifiable-by-construction delivery, a hard verdict gate before irreversible actions, and ordered failure attribution.
+
+Install (user-level, all projects):
+
+```bash
+mkdir -p ~/.claude/skills/human-engineering
+curl -fsSL https://raw.githubusercontent.com/HarveyYa/human-engineering/main/skill/SKILL.md \
+  -o ~/.claude/skills/human-engineering/SKILL.md
+```
+
+Then invoke with `/human-engineering <task>`, or let the model enter it automatically for major, multi-step, or irreversible work.
+
 ## Related work
 
 Human-engineering synthesizes four existing threads and names their sum:

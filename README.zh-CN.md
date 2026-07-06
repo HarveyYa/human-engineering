@@ -143,6 +143,20 @@ Human-engineering 把解答说清楚:
 
 ---
 
+## 参考实现
+
+本仓库附带协议的可运行实现——一个 [Claude Code skill](./skill/SKILL.md):强制分阶段执行——`intent` 对齐(有异议不执行)、每次请求人类必带五字段下发、构造即可验交付、不可逆动作前的硬性 verdict 闸口、按序失败归因。
+
+安装(用户级,所有项目生效):
+
+```bash
+mkdir -p ~/.claude/skills/human-engineering
+curl -fsSL https://raw.githubusercontent.com/HarveyYa/human-engineering/main/skill/SKILL.md \
+  -o ~/.claude/skills/human-engineering/SKILL.md
+```
+
+之后用 `/human-engineering <任务>` 调用,或由模型在重大、多步骤、不可逆任务时自动进入。
+
 ## 相关工作
 
 Human-engineering 综合了四条既有线索,并为其总和命名:
