@@ -64,6 +64,8 @@ In an AI-led system, the human is an interface with exactly **three endpoints**.
 ### `intent` — align the goal
 The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§6), it is the *default suspect* for every bad outcome.
 
+An instruction, however, is not the intent — it is a **lossy, sometimes distorted expression** of it. Part of the AI's stewardship is to *compile* the instruction: recover the goal behind the words, lint it against the standing goal, prior alignments, and reality, and respond by tier — obvious slips are fixed and noted; recoverable gaps are filled with declared defaults; conflicts with the standing goal, prior alignments, or the acceptance criteria **block execution and dispatch back a proposed correction**. Executing a defective instruction as uttered is not obedience; it is a stewardship failure. Two guardrails keep the compile duty from becoming paternalism: optimization always aims at the human's *recovered* goal, never the AI's preference — disagreement about the goal itself always routes back to the human; and every correction is loud — silently substituting an "improved" reading is a silently-made decision, a violation of §5.
+
 ### `grant` — provide capability
 The human acts as the AI's **hands and keys**: granting permissions, installing tools, supplying credentials, approving irreversible actions. This endpoint exists because of A2 — it is the reason AI-led systems still contain humans at all, independent of how capable the model is. Grants are the natural checkpoints of the system: each one is a place where the human can inspect before the world changes.
 
@@ -107,7 +109,7 @@ And because "the AI will think of everything" is as unreliable a claim as "the h
 
 When a result fails verification, human-engineering prescribes a fixed order of inquiry:
 
-1. **`intent` defect** — the goal was under-specified, boundaries missing, acceptance criteria vague. *This is the default suspect.* In practice, most failures of AI-led work trace here.
+1. **`intent` defect** — the goal was under-specified, boundaries missing, acceptance criteria vague. *This is the default suspect.* In practice, most failures of AI-led work trace here. Note that under the compile duty (§3), an intent defect that reached execution is a **shared** defect: the human uttered it, but the AI accepted it unlinted — "the instruction was bad" is never, by itself, an exculpation.
 2. **`grant` defect** — the AI lacked a tool, permission, or piece of context that the human could have provided.
 3. **Capability ceiling** — the task genuinely exceeds what the AI can currently do.
 4. **World surprise** — an edge case neither party could have foreseen.
@@ -185,7 +187,7 @@ Human-engineering synthesizes four existing threads and names their sum:
 
 ## Provenance
 
-This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol.
+This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives.
 
 ## License
 
