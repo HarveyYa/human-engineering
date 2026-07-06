@@ -12,6 +12,16 @@
 
 ---
 
+## The theory in one story
+
+This repository was built the way the document below says systems should run, so its own history is the fastest explanation.
+
+A human wanted a theory written and published. He did not write it, plan it, or manage the work. He did exactly three things. He said what he wanted and what "done" would look like — that is **`intent`**. He logged in to GitHub, installed the tools, approved the publishing — that is **`grant`**. He read what came back and said "yes," or pointed at what was wrong — that is **`verdict`**. The AI did everything else: research, writing, translation, repository setup. And whenever it needed something only the human could give — a permission, a decision with lasting consequences — it sent back a short, fully-explained request, never a raw question.
+
+When a result missed, the first suspect was the goal statement, not the AI's effort. When the human caught the AI silently carrying an old decision (a license) into a changed situation, the catch became a standing rule. When the human said "parts of this I can't understand," that verdict — by this document's own rules — indicted the document, not the reader. This section exists because of it.
+
+Everything below is that pattern, stated precisely.
+
 ## 1. Definition
 
 **Human-engineering** is the discipline of designing the human's role, interface, and protocols inside an AI-led system — so that human involvement is **rare, precise, and high-leverage**.
@@ -42,6 +52,8 @@ It asks the inverted question: *given a capable AI that leads the workflow, how 
 
 Neither replaces the other. A production system needs both: a harness so the AI acts safely, and human-engineering so the human acts effectively.
 
+The discipline also has a floor. Running the protocol costs alignment effort and dispatch overhead; below a certain stake, the ceremony outweighs the work. Human-engineering engages when misalignment is expensive — multi-step work, irreversible or outward-facing actions, standing goals — and steps aside for trivial requests, exactly as a harness distinguishes a production deploy from a scratch script.
+
 ## 2. Three axioms
 
 The discipline rests on three empirical regularities. Each is already visible today and each strengthens over time.
@@ -64,7 +76,7 @@ In an AI-led system, the human is an interface with exactly **three endpoints**.
 ### `intent` — align the goal
 The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§6), it is the *default suspect* for every bad outcome.
 
-An instruction, however, is not the intent — it is a **lossy, sometimes distorted expression** of it. Part of the AI's stewardship is to *compile* the instruction: recover the goal behind the words, lint it against the standing goal, prior alignments, and reality, and respond by tier — obvious slips are fixed and noted; recoverable gaps are filled with declared defaults; conflicts with the standing goal, prior alignments, or the acceptance criteria **block execution and dispatch back a proposed correction**. Executing a defective instruction as uttered is not obedience; it is a stewardship failure. Two guardrails keep the compile duty from becoming paternalism: optimization always aims at the human's *recovered* goal, never the AI's preference — disagreement about the goal itself always routes back to the human; and every correction is loud — silently substituting an "improved" reading is a silently-made decision, a violation of §5.
+An instruction, however, is not the intent — it is a **lossy, sometimes distorted expression** of it (lossy the way a compressed photo is: the goal survives, details drop out). Part of the AI's stewardship is to *compile* the instruction: recover the goal behind the words, lint it against the standing goal, prior alignments, and reality, and respond by tier — obvious slips are fixed and noted; recoverable gaps are filled with declared defaults; conflicts with the standing goal, prior alignments, or the acceptance criteria **block execution and dispatch back a proposed correction**. Executing a defective instruction as uttered is not obedience; it is a stewardship failure. Two guardrails keep the compile duty from becoming paternalism: optimization always aims at the human's *recovered* goal, never the AI's preference — disagreement about the goal itself always routes back to the human; and every correction is loud — silently substituting an "improved" reading is a silently-made decision, a violation of §5.
 
 ### `grant` — provide capability
 The human acts as the AI's **hands and keys**: granting permissions, installing tools, supplying credentials, approving irreversible actions. This endpoint exists because of A2 — it is the reason AI-led systems still contain humans at all, independent of how capable the model is. Grants are the natural checkpoints of the system: each one is a place where the human can inspect before the world changes.
@@ -90,7 +102,7 @@ This is prompt engineering inverted. Prompt engineering spends human effort phra
 
 ## 5. The stewardship obligation: seeing every decision
 
-If the AI holds the initiative, it holds the whole board. In a human-led workflow, omissions are caught by layers of managerial review; human-engineering removes those layers *by design* — the human at `verdict` samples, and a sample cannot catch a systematic omission. Comprehensive stewardship is therefore not a virtue of good execution; it is a **constitutive obligation of holding the initiative**. Nobody else is looking.
+If the AI holds the initiative, it holds the whole board. In a human-led workflow, omissions are caught by layers of managerial review; human-engineering removes those layers *by design* — the human at `verdict` samples, and a sample cannot catch a systematic omission. Comprehensive stewardship is therefore not a virtue of good execution; it is a **constitutive obligation of holding the initiative** — not extra credit, but part of what "leading" means, the way keeping the books is part of what being the treasurer means. Nobody else is looking.
 
 The obligation has two layers, and the order matters:
 
@@ -122,7 +134,7 @@ The strongest objection to AI-led systems targets the `verdict` endpoint: **a hu
 
 Human-engineering's answer is that verifiability is the **deliverer's** burden, not the verifier's:
 
-**Every deliverable must be verifiable by construction.** The AI does not merely deliver the artifact; it delivers the artifact *plus* the means to check it: the load-bearing assumptions made, the evidence gathered, the checks already run and their results, and a legible account of what changed. A deliverable that can only be verified by re-doing the work is a defective deliverable, no matter how correct its content.
+**Every deliverable must be verifiable by construction.** The AI does not merely deliver the artifact; it delivers the artifact *plus* the means to check it: the load-bearing assumptions made, the evidence gathered, the checks already run and their results, and a legible account of what changed. A deliverable that can only be verified by re-doing the work is a defective deliverable, no matter how correct its content. And legibility is measured against the *actual* verifier — the accountable human in this loop, with their vocabulary and their expertise — not an idealized reader. A delivery its own verifier cannot understand is defective by construction; when that happens, diagnosing where it fails and re-delivering legibly is the deliverer's work, never the verifier's.
 
 Three supporting practices keep the human's verdict meaningful over time:
 
@@ -131,6 +143,8 @@ Three supporting practices keep the human's verdict meaningful over time:
 - **Calibrated spot-checks** — the human periodically deep-verifies a random sample end-to-end, to measure (not assume) how much trust the delegation deserves.
 
 Note the symmetry with knowledge engineering: there, we structure *knowledge* so the AI can read it; here, the AI structures *results* so the human can verify them. Each side writes in the other's native format.
+
+The gap also has a second face. The first is the human who *cannot* verify; the second is the human who *stops* verifying — approval fatigue turns the verdict endpoint into a rubber stamp long before any capability ceiling is reached. The countermeasures are the AI's to run, because in an AI-led system the human is a critical dependency whose health the AI must monitor: keep dispatch volume low enough that each verdict is an event, not a reflex; require verdicts with content on high-stakes items — a bare "ok" on an irreversible dispatch is itself a calibration warning; and treat uniformly fast approvals as evidence to sharpen the spot-check suggestions, never as trust earned.
 
 ## 8. The maturity model
 
@@ -160,6 +174,8 @@ Human-engineering states the resolution plainly:
 
 The inversion is not a loss of human control; it is the *precise engineering* of human control. A human who reviews five well-evidenced dispatches a day governs more, not less, than one who micro-manages five hundred prompts. The endpoint of this discipline is a system in which humans stop working *for* their tools and stop working *as* managers of their tools — and instead occupy the only three seats that were ever irreducibly theirs.
 
+One boundary, stated plainly: this document describes the smallest complete unit — one human, one AI, one standing goal. Organizations are many such units stacked together, and the stacking raises questions a single unit cannot answer: who owns `intent` when several humans disagree, how requests from many AIs compete for one human's attention, and who answers for what when there are many signers. That is the discipline's open frontier; the single unit had to be specified first.
+
 ---
 
 ## Reference implementation
@@ -187,7 +203,7 @@ Human-engineering synthesizes four existing threads and names their sum:
 
 ## Provenance
 
-This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives.
+This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives. And the plain-story section at the top exists because the human said "parts of this I can't understand" — a verdict that, by §7, indicted the document rather than the reader — and then pointed out that asking him to locate the unclear passages was itself a violation: diagnosing a defective delivery is the deliverer's work.
 
 ## License
 

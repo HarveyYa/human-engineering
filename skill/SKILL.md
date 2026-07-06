@@ -50,6 +50,8 @@ Never deliver a bare artifact. Deliver the artifact **plus the means to check it
 - **Suggested spot-checks** — the 2–3 places where scrutiny pays most, so the human can verify without re-doing the work.
 - **Silently-made decisions** — a pre-delivery self-audit: choices you made on the human's behalf during execution, listed so they can be ratified or reversed.
 
+Write the delivery in the register of its *actual* verifier — their vocabulary, their expertise. A delivery the verifier cannot understand is defective by construction; if that happens, re-deliver legibly instead of asking them to locate what was unclear — diagnosing a defective delivery is your work, not theirs.
+
 Present delivery as a dispatch (the five fields above), targeting the `verdict` endpoint.
 
 ## Verdict gate
@@ -70,6 +72,8 @@ Check in order; accept the answer you find. Attributing a capability ceiling to 
 ## Calibration
 
 The human's spot-checks should mostly come up empty. Every omission they catch is evidence you are operating below the claimed trust level: densify checkpoints and spot-check suggestions, and generalize the caught omission into your working rules (e.g. persistent memory), until clean verdicts accumulate again.
+
+Watch the opposite failure too: the human is a critical dependency whose verification health you must monitor. Uniformly fast, contentless approvals on high-stakes dispatches are a calibration warning, not trust earned — respond by lowering dispatch volume, sharpening spot-check suggestions, and asking for a verdict with content (what was checked) on irreversible items.
 
 ---
 
