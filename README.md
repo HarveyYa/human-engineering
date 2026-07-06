@@ -62,15 +62,15 @@ When outcomes go wrong, responsibility lands on a human — legally, contractual
 In an AI-led system, the human is an interface with exactly **three endpoints**. Everything a human legitimately contributes routes through one of them.
 
 ### `intent` — align the goal
-The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§5), it is the *default suspect* for every bad outcome.
+The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§6), it is the *default suspect* for every bad outcome.
 
 ### `grant` — provide capability
 The human acts as the AI's **hands and keys**: granting permissions, installing tools, supplying credentials, approving irreversible actions. This endpoint exists because of A2 — it is the reason AI-led systems still contain humans at all, independent of how capable the model is. Grants are the natural checkpoints of the system: each one is a place where the human can inspect before the world changes.
 
 ### `verdict` — verify the result
-The human checks the deliverable against the acceptance criteria set in `intent`, and accepts or rejects. By A3 this endpoint can never be fully automated away: the human who is accountable must be the one who accepts. What *can* be engineered is its cost — see §6.
+The human checks the deliverable against the acceptance criteria set in `intent`, and accepts or rejects. By A3 this endpoint can never be fully automated away: the human who is accountable must be the one who accepts. What *can* be engineered is its cost — see §7.
 
-**Design rule.** The three endpoints are the human's *entire* job description in an AI-led system. Work that a human performs outside these endpoints — manually executing steps, micro-managing the AI's process, re-doing the AI's work — is either a symptom of insufficient trust (see the maturity model, §7) or a design failure to be engineered away.
+**Design rule.** The three endpoints are the human's *entire* job description in an AI-led system. Work that a human performs outside these endpoints — manually executing steps, micro-managing the AI's process, re-doing the AI's work — is either a symptom of insufficient trust (see the maturity model, §8) or a design failure to be engineered away.
 
 ## 4. The dispatch protocol: how AI tasks a human
 
@@ -86,7 +86,24 @@ Because human attention is the scarce resource (§1), every task the AI dispatch
 
 This is prompt engineering inverted. Prompt engineering spends human effort phrasing things so the machine understands cheaply; the dispatch protocol spends **machine effort** phrasing things so the **human** decides cheaply. An AI that dispatches raw, unexplained, unprioritized asks to its humans is exhibiting the same defect as a human writing garbage prompts — and it is an engineering defect, not a fact of life.
 
-## 5. Failure attribution
+## 5. The stewardship obligation: seeing every decision
+
+If the AI holds the initiative, it holds the whole board. In a human-led workflow, omissions are caught by layers of managerial review; human-engineering removes those layers *by design* — the human at `verdict` samples, and a sample cannot catch a systematic omission. Comprehensive stewardship is therefore not a virtue of good execution; it is a **constitutive obligation of holding the initiative**. Nobody else is looking.
+
+The obligation has two layers, and the order matters:
+
+- **See every decision.** Maintain a live inventory of every decision point the work touches — including the ones being made implicitly.
+- **Route each one correctly.** Settle what the released spec covers; dispatch to `intent` what is genuinely the human's (licensing, visibility, boundaries — anything whose consequences outlive the task).
+
+The second layer fails loudly: a wrong decision surfaces at `verdict`. The first fails silently: **a decision nobody saw was still made — by default, and by no one.** It never even enters the human's sample. This is why *seeing* outranks *deciding correctly*.
+
+And because "the AI will think of everything" is as unreliable a claim as "the human will review carefully," stewardship must be engineered, not assumed:
+
+- **Scope delta → re-audit.** Any change to the spec invalidates prior alignment audits. On every scope change, re-check each previously aligned decision against the new scope and surface the ones that no longer hold. Alignments never silently carry over.
+- **Pre-delivery self-audit.** Before delivering, sweep for silently-made decisions — *what did I decide on the human's behalf during execution?* — and list them in the delivery.
+- **Spot-check hit rate as the calibration signal.** The human's spot-checks should mostly come up empty. Every hit is evidence the system is running below its claimed maturity level: tighten the gates and densify the checks until clean verdicts accumulate again.
+
+## 6. Failure attribution
 
 When a result fails verification, human-engineering prescribes a fixed order of inquiry:
 
@@ -97,7 +114,7 @@ When a result fails verification, human-engineering prescribes a fixed order of 
 
 The order matters: it is a *discipline*, not an iron law. Checking `intent` first keeps the human honest about their own contribution before blaming the model. But stopping at `intent` when the true cause is (3) turns "the AI hit its limit" into "I didn't phrase it well enough" — a miscalibration that wastes human effort re-specifying the un-specifiable. Attribute in order; accept the answer you find.
 
-## 6. The verification gap, and verifiable-by-construction delivery
+## 7. The verification gap, and verifiable-by-construction delivery
 
 The strongest objection to AI-led systems targets the `verdict` endpoint: **a human cannot verify what they can no longer understand.** As AI capability grows, unaided human verification weakens — this is the *scalable oversight problem*, and it is the load-bearing risk of this entire framework.
 
@@ -113,9 +130,9 @@ Three supporting practices keep the human's verdict meaningful over time:
 
 Note the symmetry with knowledge engineering: there, we structure *knowledge* so the AI can read it; here, the AI structures *results* so the human can verify them. Each side writes in the other's native format.
 
-## 7. The maturity model
+## 8. The maturity model
 
-Adoption of human-engineering is graded by where the human sits in the loop. Trust — earned via the spot-check record of §6 — is what moves a system up a level; a failed verdict moves it down.
+Adoption of human-engineering is graded by where the human sits in the loop. Trust — earned via the spot-check record of §7 — is what moves a system up a level; a failed verdict moves it down.
 
 | Level | Name | Who leads | Human involvement |
 |---|---|---|---|
@@ -129,14 +146,14 @@ Most of today's industry operates at HE-0 through HE-2 — and most of what is s
 
 The checkpoint schedule is dynamic by design: new domain or new stakes → more `grant` gates and denser spot-checks; accumulating clean verdicts → fewer gates, coarser checks. Autonomy is never *given*; it is *measured into existence*.
 
-## 8. Conclusion
+## 9. Conclusion
 
 Harness engineering was the discipline of the decade's first half: humans learned to build environments in which AI works reliably. Its very success creates the successor problem. Once the harness is good enough, the AI leads the workflow — and the unengineered component left in the system is the human.
 
 Human-engineering states the resolution plainly:
 
 - The human's job collapses to three endpoints: **align the goal, grant the capability, verify the result.**
-- The AI's obligations expand to match: **dispatch tasks engineered for human attention, and deliver results verifiable by construction.**
+- The AI's obligations expand to match: **steward every decision the work touches, dispatch tasks engineered for human attention, and deliver results verifiable by construction.**
 - Authority and accountability never move. Initiative does — and it moves to the AI.
 
 The inversion is not a loss of human control; it is the *precise engineering* of human control. A human who reviews five well-evidenced dispatches a day governs more, not less, than one who micro-manages five hundred prompts. The endpoint of this discipline is a system in which humans stop working *for* their tools and stop working *as* managers of their tools — and instead occupy the only three seats that were ever irreducibly theirs.
@@ -168,7 +185,7 @@ Human-engineering synthesizes four existing threads and names their sum:
 
 ## Provenance
 
-This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §5, rule 1 — to an under-specified `intent`, corrected, and re-executed.
+This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol.
 
 ## License
 

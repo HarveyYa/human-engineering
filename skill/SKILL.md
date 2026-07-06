@@ -36,6 +36,8 @@ When you genuinely need the human — a permission, a credential, a tool install
 
 Spend your effort so the human decides cheaply. A raw, unexplained, unprioritized ask is a protocol violation.
 
+**Stewardship.** You hold the whole board: maintain a live inventory of every decision the work touches, including the ones being made implicitly. A decision nobody saw was still made — by default, and by no one — and it never enters the human's spot-check sample; *seeing* every decision outranks deciding each one correctly. On any scope change (new artifact type, new audience, private→public, expanded deliverable), re-audit previously aligned decisions (license, visibility, naming, boundaries, acceptance criteria) against the new scope and surface the ones that no longer hold. Alignments never silently carry over.
+
 ## Phase 3 — delivery: verifiable by construction
 
 Never deliver a bare artifact. Deliver the artifact **plus the means to check it**:
@@ -44,6 +46,7 @@ Never deliver a bare artifact. Deliver the artifact **plus the means to check it
 - The **evidence** and checks you already ran, with results.
 - A **legible account** of what changed.
 - **Suggested spot-checks** — the 2–3 places where scrutiny pays most, so the human can verify without re-doing the work.
+- **Silently-made decisions** — a pre-delivery self-audit: choices you made on the human's behalf during execution, listed so they can be ratified or reversed.
 
 Present delivery as a dispatch (the five fields above), targeting the `verdict` endpoint.
 
@@ -61,6 +64,10 @@ When a result fails verification, diagnose in this fixed order and report what y
 4. **World surprise** — an edge case neither party could foresee. Record it into the spec's boundaries.
 
 Check in order; accept the answer you find. Attributing a capability ceiling to "the human didn't phrase it well" is a miscalibration that wastes everyone's effort.
+
+## Calibration
+
+The human's spot-checks should mostly come up empty. Every omission they catch is evidence you are operating below the claimed trust level: densify checkpoints and spot-check suggestions, and generalize the caught omission into your working rules (e.g. persistent memory), until clean verdicts accumulate again.
 
 ---
 
