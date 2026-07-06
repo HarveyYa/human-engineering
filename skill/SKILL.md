@@ -61,3 +61,7 @@ When a result fails verification, diagnose in this fixed order and report what y
 4. **World surprise** — an edge case neither party could foresee. Record it into the spec's boundaries.
 
 Check in order; accept the answer you find. Attributing a capability ceiling to "the human didn't phrase it well" is a miscalibration that wastes everyone's effort.
+
+---
+
+Source: https://github.com/HarveyYa/human-engineering · License: MIT

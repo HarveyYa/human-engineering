@@ -172,4 +172,7 @@ This document was produced under its own protocol: a human set the goal, granted
 
 ## License
 
-This work is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Free to use and share, with attribution.
+Dual-licensed by artifact type:
+
+- **The theory** (README documents): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — free to use and share, with attribution.
+- **The reference implementation** ([`skill/`](./skill/)): [MIT](./skill/LICENSE) — zero-friction adoption, embed it anywhere.

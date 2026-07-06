@@ -172,4 +172,7 @@ Human-engineering 综合了四条既有线索,并为其总和命名:
 
 ## 许可证
 
-本作品采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权。可自由使用与传播,须署名。
+按产物类型双许可:
+
+- **理论**(README 文档):[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) —— 可自由使用与传播,须署名。
+- **参考实现**([`skill/`](./skill/)):[MIT](./skill/LICENSE) —— 零阻力采用,可嵌入任何项目。
