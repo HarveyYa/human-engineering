@@ -1,186 +1,186 @@
-**English** · [中文](./README.zh-CN.md)
+**中文** · [English](./README.en.md)
 
 ---
 
-# Human-Engineering
+# Human-Engineering(人类工程)
 
-**The engineering discipline for the human side of AI-led systems.**
+**AI 主导的系统里,面向「人」这一侧的工程学科。**
 
-> Harness engineering wraps the *machine* so it can work inside a human's workflow.
-> Human-engineering wraps the *human* so they can work inside an AI's workflow.
-> The industry has built the first. This document defines the second.
+> Harness 工程包装「机器」,让它能在人的工作流里干活。
+> Human-engineering 包装「人」,让人能在 AI 的工作流里干活。
+> 业界已经建成了前者。本文定义后者。
 
 ---
 
-## 1. Definition
+## 1. 定义
 
-**Human-engineering** is the discipline of designing the human's role, interface, and protocols inside an AI-led system — so that human involvement is **rare, precise, and high-leverage**.
+**Human-engineering(人类工程)**:在 AI 主导的系统中,设计人的角色、接口与协议,使人的介入**稀少、精准、高杠杆**的工程学科。
 
-Its subject matter in one sentence: **a human and an AI completing a task goal together, with the AI leading as the premise — the human's work reduced to a standard form, and even the human's instructions subject to optimization and correction (§3).**
+一句话说清它的研究对象:**人与 AI 共同完成一个任务目标,以 AI 主导为前提——人的工作被规范成标准形式,连人的指令本身也接受优化与纠正(§3)。**
 
-The industry consensus formula for agents is:
+业界对 Agent 的共识公式是:
 
 ```
 Agent  =  Model  +  Harness
 ```
 
-The harness is everything wrapped around the model: tools, permissions, guardrails, feedback loops, observability. Harness engineering asks: *given a capable model, how do we engineer its environment so it performs reliably for humans?*
+Harness 是包在模型外面的一切:工具、权限、护栏、反馈回路、可观测性。Harness 工程问的是:*给定一个有能力的模型,如何工程化它的环境,让它为人可靠地工作?*
 
-Human-engineering is the mirror image:
+Human-engineering 是它的镜像:
 
 ```
-System  =  AI (drive)  +  Human (authority)
+System  =  AI(驱动)  +  Human(权柄)
 ```
 
-It asks the inverted question: *given a capable AI that leads the workflow, how do we engineer the **human's** environment — their duties, their interface, the tasks dispatched to them — so the human performs reliably for the system?*
+它问的是反过来的问题:*给定一个主导工作流的 AI,如何工程化「人」的环境——人的职责、人的接口、下发给人的任务——让人为系统可靠地工作?*
 
-| Dimension | Harness engineering | Human-engineering |
+| 维度 | Harness 工程 | Human-Engineering |
 |---|---|---|
-| What gets engineered | The AI's environment: tools, constraints, guardrails | The human's role: duties, interface, protocols |
-| Who sets rules for whom | Human → AI | AI → Human |
-| Who initiates | Human initiates, AI executes | AI initiates and schedules, human executes key actions |
-| Scarce resource optimized | Model reliability | **Human attention and authority** |
-| Failure it prevents | The AI doing the wrong thing | The human becoming the bottleneck or the blind spot |
+| 被工程化的对象 | AI 的环境:工具、约束、护栏 | 人的角色:职责、接口、协议 |
+| 谁给谁定规则 | 人 → AI | AI → 人 |
+| 发起权 | 人发起,AI 执行 | AI 发起并调度,人执行关键动作 |
+| 优化的稀缺资源 | 模型的可靠性 | **人的注意力与权柄** |
+| 防止的失败 | AI 做错事 | 人变成瓶颈或盲区 |
 
-Neither replaces the other. A production system needs both: a harness so the AI acts safely, and human-engineering so the human acts effectively.
+二者互不取代。一个生产级系统两者都需要:harness 让 AI 安全地动,human-engineering 让人有效地动。
 
-The discipline also has a floor. Running the protocol costs alignment effort and dispatch overhead; below a certain stake, the ceremony outweighs the work. Human-engineering engages when misalignment is expensive — multi-step work, irreversible or outward-facing actions, standing goals — and steps aside for trivial requests, exactly as a harness distinguishes a production deploy from a scratch script.
+这门学科也有下限。跑协议要花对齐成本与下发开销;赌注低于某个阈值时,仪式比活儿本身还贵。Human-engineering 在错位代价高时介入——多步骤工作、不可逆或对外的动作、常驻目标——对琐碎请求则让路,正如 harness 会区分生产部署与临时脚本。
 
-## 2. Three axioms
+## 2. 三条公理
 
-The discipline rests on three empirical regularities. Each is already visible today and each strengthens over time.
+本学科建立在三条经验规律之上。每一条今天已经可见,且随时间只会更强。
 
-**A1 — Capability migrates to the AI.**
-Model capability grows monotonically; execution and increasingly decision-making shift from human to AI. Any division of labor built on "the human executes better" has a shelf life.
+**A1 —— 能力向 AI 迁移。**
+模型能力单调增长;执行乃至越来越多的决策从人转移到 AI。任何建立在「人执行得更好」上的分工都有保质期。
 
-**A2 — Embodiment and standing stay with the human.**
-AI has intelligence without a body or legal standing. Permissions, credentials, hardware, purchases, account ownership, legal signatures — the *keys to the world* — are held by humans. An AI that can design the entire plan still needs a human to press *approve*, install the tool, or sign the contract.
+**A2 —— 身体与法律地位留在人这里。**
+AI 有智力,没有身体,也没有法律人格。权限、凭据、硬件、付款、账号所有权、法律签字——这些**通往世界的钥匙**握在人手里。一个能设计完整方案的 AI,依然需要人来按下「批准」、安装工具、签署合同。
 
-**A3 — Accountability is non-transferable.**
-When outcomes go wrong, responsibility lands on a human — legally, contractually, morally. No deployment structure changes this. The human can delegate execution and even judgment, but never accountability.
+**A3 —— 问责不可转移。**
+结果出了问题,责任落在人身上——法律上、合同上、道义上。任何部署结构都改变不了这一点。人可以委托执行,甚至委托判断,但永远无法委托问责。
 
-**Consequence.** A1 pushes work toward the AI; A2 and A3 anchor authority to the human. The stable equilibrium is therefore not "human commands, AI executes" (wastes A1) nor "AI does everything" (violates A2, A3). It is: **the AI holds the initiative — it plans, executes, schedules, and dispatches; the human holds the authority — and exposes it through a small, well-defined interface.** Human-engineering is the design of that interface.
+**推论。** A1 把工作推向 AI;A2、A3 把权柄锚在人身上。因此稳定的均衡既不是「人命令、AI 执行」(浪费 A1),也不是「AI 包办一切」(违反 A2、A3),而是:**AI 持有发起权——规划、执行、调度、下发;人持有权柄——并通过一个小而明确的接口对外暴露。** Human-engineering 就是这个接口的设计学。
 
-## 3. The Human API
+## 3. 人类 API(The Human API)
 
-In an AI-led system, the human is an interface with exactly **three endpoints**. Everything a human legitimately contributes routes through one of them.
+在 AI 主导的系统里,人是一个恰好有**三个端点**的接口。人的一切正当贡献,都从这三个端点之一经过。
 
-### `intent` — align the goal
-The human states *what is wanted, where the boundaries are, and what counts as success*, and hands it to the AI. This is the human's highest-leverage act: every downstream decision the AI makes is derived from it. A goal hand-off is complete when it specifies at minimum: **objective, boundaries, acceptance criteria, and available permissions**. Ambiguity here is not a small defect — by the failure-attribution rule (§6), it is the *default suspect* for every bad outcome.
+### `intent` —— 对齐目标
+人讲清楚*要什么、边界在哪、什么算成功*,交给 AI。这是人杠杆最高的动作:AI 下游的每一个决策都由此推导。一次完整的目标交付至少包含:**目标、边界、验收标准、可用权限**。这里的含糊不是小瑕疵——按失败归因规则(§6),它是每一个坏结果的*头号嫌疑*。
 
-Nor is a goal hand-off a single utterance. It is an **AI-led convergence process** whose product is a written goal spec — a document the human can read, amend, and release. Three process rules govern it. **No guessing** — gaps in the spec are closed with targeted questions or filled with declared defaults, never silently assumed. **Research before release** — during alignment the AI investigates first (reaching the open web when needed), putting foreseeable problems and risks on the table as inputs to the discussion rather than surprises during execution. **Guide and echo** — the AI actively guides and extends the human's thinking, and echoes back the optimized expression of the goal for confirmation. The echo is more than confirmation: seeing their own words next to the compiled version is how the human's asking improves over time. This mirrors §8 — the AI's autonomy is measured into existence; the human's intent quality is trained into existence. Alignment ends with the human's explicit release; while disagreement remains, nothing executes.
+目标交付也不是一句口述,而是一个**由 AI 主导的收敛过程**,产物是一份成文的目标 spec(一份人可读、可改、可放行的文档)。三条过程规则:**不猜测**——spec 的空缺用定向提问补齐,或用标明的默认值填充,永不静默臆断;**先调研,再放行**——对齐期间 AI 先行调研(必要时联网),把可预见的问题与风险摆上桌,作为讨论的输入,而不是执行中的意外;**引导并回显**——AI 主动引导、扩展人的想法,把优化后的目标表达回显给人确认。回显不只是确认:人对照自己的原话与编译后的版本,提问水平随之上升。这与 §8 对称——AI 的自主性是被测量出来的,人的 intent 质量是被训练出来的。对齐以人的明确放行结束;分歧未决,不执行。
 
-An instruction, however, is not the intent — it is a **lossy, sometimes distorted expression** of it (lossy the way a compressed photo is: the goal survives, details drop out). Part of the AI's stewardship is to *compile* the instruction: recover the goal behind the words, lint it against the standing goal, prior alignments, and reality, and respond by tier — obvious slips are fixed and noted; recoverable gaps are filled with declared defaults; conflicts with the standing goal, prior alignments, or the acceptance criteria **block execution and dispatch back a proposed correction**. Executing a defective instruction as uttered is not obedience; it is a stewardship failure. Two guardrails keep the compile duty from becoming paternalism: optimization always aims at the human's *recovered* goal, never the AI's preference — disagreement about the goal itself always routes back to the human; and every correction is loud — silently substituting an "improved" reading is a silently-made decision, a violation of §5.
+但指令不等于意图——它是意图的**有损的、有时甚至失真的表达**(「有损」如同压缩过的照片:目标还在,细节丢了)。AI 的统筹义务包含*编译*指令:还原字面背后的目标,把指令对照常驻目标、既有对齐与现实做一遍检查,并分级响应——明显笔误,径直修正并注明;可恢复的缺口,用声明过的默认值填充;与常驻目标、既有对齐或验收标准冲突的,**阻断执行,下发回一份修正提案**。把有缺陷的指令照字面执行不是服从,是统筹失职。两条护栏防止编译义务沦为家长作风:优化永远指向*还原出的人的目标*,而非 AI 的偏好——对目标本身的分歧,永远交回人裁决;每一次纠正都必须响亮——静默替换成「更好的」解读,就是一个无声决策,即 §5 之违规。
 
-### `grant` — provide capability
-The human acts as the AI's **hands and keys**: granting permissions, installing tools, supplying credentials, approving irreversible actions. This endpoint exists because of A2 — it is the reason AI-led systems still contain humans at all, independent of how capable the model is. Grants are the natural checkpoints of the system: each one is a place where the human can inspect before the world changes.
+### `grant` —— 授予能力
+人充当 AI 的**手和钥匙**:授权限、装工具、给凭据、批准不可逆动作。这个端点因 A2 而存在——它是 AI 主导的系统里仍然有人的根本原因,与模型多强无关。每一次授予都是系统的天然检查点:世界被改变之前,人有一次过目的机会。
 
-The mirror of this endpoint also holds: **choosing the means is the AI's job.** What the human releases is the goal, not a technology route — inside the released spec, selecting the most suitable or most established tools and techniques (researching online when needed) is the AI's own decision; the human appears only where keys are required: downloads, installs, logins, payments. An AI that comes back after alignment to ask "which framework?" is pushing the initiative back onto the human.
+这个端点的镜像同样成立:**实现方式的选择权在 AI**。人放行的是目标,不是技术路线——在已放行的 spec 内,选用最合适或最通行的技术与工具(必要时联网调研)是 AI 的分内决策;人只在钥匙处出现:下载、安装、登录、付费。对齐结束后还回头问「用什么框架」的 AI,是在把发起权推回给人。
 
-### `verdict` — verify the result
-The human checks the deliverable against the acceptance criteria set in `intent`, and accepts or rejects. By A3 this endpoint can never be fully automated away: the human who is accountable must be the one who accepts. What *can* be engineered is its cost — see §7.
+### `verdict` —— 验收成果
+人对照 `intent` 里定下的验收标准检查交付物,接受或退回。由 A3,这个端点永远无法被完全自动化:担责的人必须是拍板的人。*可以*被工程化的是它的成本——见 §7。
 
-**Design rule.** The three endpoints are the human's *entire* job description in an AI-led system. Work that a human performs outside these endpoints — manually executing steps, micro-managing the AI's process, re-doing the AI's work — is either a symptom of insufficient trust (see the maturity model, §8) or a design failure to be engineered away.
+**设计规则。** 三个端点就是人在 AI 主导系统里的*全部*岗位说明书。人在端点之外做的工作——亲手执行步骤、微观管理 AI 的过程、重做 AI 的活——要么是信任不足的症状(见成熟度模型 §8),要么是待消除的设计缺陷。
 
-## 4. The dispatch protocol: how AI tasks a human
+## 4. 下发协议:AI 如何给人派任务
 
-If the AI leads, the AI dispatches. But "AI commands the human" is imprecise in one crucial way: **the AI holds the initiative; the human holds the authority.** The AI decides *what needs doing* and pushes it to the human; the human's signature is what makes it real, and the signer bears the consequences. The correct mental model is a **chief of staff**: it runs everything, and puts in front of you only what needs your signature.
+AI 主导,则由 AI 下发。但「AI 命令人」这个说法在一个关键处不精确:**AI 持有发起权,人持有权柄。** AI 决定*该做什么*并推到人面前;人的签字才让它成真,签字的人承担后果。正确的心智模型是**参谋长**:它把一切跑起来,只把需要你签字的放到你面前。
 
-Because human attention is the scarce resource (§1), every task the AI dispatches to a human must be engineered for it. A well-formed dispatch carries five fields:
+因为人的注意力是稀缺资源(§1),AI 下发给人的每一个任务都必须为此做工程化。一次合格的下发带五个字段:
 
-1. **Action** — the smallest sufficient thing the human must do.
-2. **Reason** — which endpoint this maps to (`grant`? `verdict`?) and why it cannot be done by the AI itself.
-3. **Evidence** — what the AI already verified, so the human reviews instead of re-derives.
-4. **Risk** — reversibility, blast radius, and cost of error, so the human knows how much scrutiny to apply.
-5. **Default** — what happens (or is blocked) if the human does nothing.
+1. **动作** —— 人需要做的、最小充分的那件事。
+2. **理由** —— 对应哪个端点(`grant`?`verdict`?),以及为什么 AI 自己做不了。
+3. **证据** —— AI 已经核验过什么,让人做复核而不是重推导。
+4. **风险** —— 可逆性、影响面、出错代价,让人知道该用多大力气审。
+5. **默认** —— 人不响应时会发生什么(或什么被卡住)。
 
-This is prompt engineering inverted. Prompt engineering spends human effort phrasing things so the machine understands cheaply; the dispatch protocol spends **machine effort** phrasing things so the **human** decides cheaply. An AI that dispatches raw, unexplained, unprioritized asks to its humans is exhibiting the same defect as a human writing garbage prompts — and it is an engineering defect, not a fact of life.
+这是提示词工程的倒置。提示词工程花*人的力气*措辞,让机器便宜地理解;下发协议花**机器的力气**措辞,让**人**便宜地决策。一个把原始的、没解释、没排序的请求甩给人的 AI,和一个写垃圾提示词的人犯的是同一种毛病——而这是工程缺陷,不是宿命。
 
-## 5. The stewardship obligation: seeing every decision
+## 5. 统筹义务:看见每一个决策
 
-If the AI holds the initiative, it holds the whole board. In a human-led workflow, omissions are caught by layers of managerial review; human-engineering removes those layers *by design* — the human at `verdict` samples, and a sample cannot catch a systematic omission. Comprehensive stewardship is therefore not a virtue of good execution; it is a **constitutive obligation of holding the initiative** — not extra credit, but part of what "leading" means, the way keeping the books is part of what being the treasurer means. Nobody else is looking.
+AI 持有发起权,就持有整个棋盘。人主导的工作流里,遗漏由层层管理复审兜住;human-engineering **有意地**拆掉了这些层——人在 `verdict` 端点做的是抽检,而抽检抓不住系统性遗漏。所以全局统筹不是优秀执行的美德,而是**持有发起权的构成性义务**——不是加分项,而是「主导」这个词本身的一部分,就像记账本身就是「当会计」的一部分。除了 AI,没有别人在看。
 
-The obligation has two layers, and the order matters:
+这项义务分两层,顺序有讲究:
 
-- **See every decision.** Maintain a live inventory of every decision point the work touches — including the ones being made implicitly.
-- **Route each one correctly.** Settle what the released spec covers; dispatch to `intent` what is genuinely the human's (licensing, visibility, boundaries — anything whose consequences outlive the task).
+- **看见一切**:维护一份工作所触及的全部决策点的活清单——包括正在被隐式做掉的那些。
+- **正确路由**:已放行的 spec 覆盖的自己定;真正属于人的(许可、可见性、边界——一切后果超出本次任务的)下发到 `intent` 端点。
 
-The second layer fails loudly: a wrong decision surfaces at `verdict`. The first fails silently: **a decision nobody saw was still made — by default, and by no one.** It never even enters the human's sample. This is why *seeing* outranks *deciding correctly*.
+第二层的失败是响亮的:错误的决定会在 `verdict` 暴露。第一层的失败是无声的:**没被看见的决定仍然被做了——以默认方式,由无人负责地做了。**它连进入人类抽检视野的机会都没有。这就是为什么*看见*优先于*决定正确*。
 
-And because "the AI will think of everything" is as unreliable a claim as "the human will review carefully," stewardship must be engineered, not assumed:
+而「AI 会想全」和「人会认真检查」是同等不可靠的宣称,所以统筹必须被工程化,不能靠自觉:
 
-- **Scope delta → re-audit.** Any change to the spec invalidates prior alignment audits. On every scope change, re-check each previously aligned decision against the new scope and surface the ones that no longer hold. Alignments never silently carry over.
-- **Pre-delivery self-audit.** Before delivering, sweep for silently-made decisions — *what did I decide on the human's behalf during execution?* — and list them in the delivery.
-- **Spot-check hit rate as the calibration signal.** The human's spot-checks should mostly come up empty. Every hit is evidence the system is running below its claimed maturity level: tighten the gates and densify the checks until clean verdicts accumulate again.
+- **范围变更 → 重审**:spec 的任何改动都使先前的对齐审计失效。每次范围变化,逐项复查已对齐决策在新范围下是否仍然成立,把失效项浮出来。对齐从不静默继承。
+- **交付前自审**:交付之前扫一遍隐式决策——*这次执行中我替人默认了什么?*——列进交付物。
+- **抽检命中率即校准信号**:人的抽检本该大多扑空。每一次命中都是系统实际运行低于其宣称成熟度的证据:收紧闸口、加密检查,直到干净的 verdict 重新累积。
 
-## 6. Failure attribution
+## 6. 失败归因
 
-When a result fails verification, human-engineering prescribes a fixed order of inquiry:
+成果没通过验收时,human-engineering 规定固定的排查顺序:
 
-1. **`intent` defect** — the goal was under-specified, boundaries missing, acceptance criteria vague. *This is the default suspect.* In practice, most failures of AI-led work trace here. Note that under the compile duty (§3), an intent defect that reached execution is a **shared** defect: the human uttered it, but the AI accepted it unlinted — "the instruction was bad" is never, by itself, an exculpation.
-2. **`grant` defect** — the AI lacked a tool, permission, or piece of context that the human could have provided.
-3. **Capability ceiling** — the task genuinely exceeds what the AI can currently do.
-4. **World surprise** — an edge case neither party could have foreseen.
+1. **`intent` 缺陷** —— 目标欠定义、边界缺失、验收标准含糊。*这是头号嫌疑。*实践中,AI 主导的工作大多数失败可追溯到这里。注意:在编译义务(§3)之下,一个进入了执行的 intent 缺陷是**共同**缺陷:话是人说的,但未经检查就接受它的是 AI——「指令本来就有问题」永远不能单独构成开脱。
+2. **`grant` 缺陷** —— AI 缺一个工具、一项权限或一块上下文,而人本可以提供。
+3. **能力天花板** —— 任务确实超出 AI 当前能力。
+4. **世界的意外** —— 双方都不可能预见的边界情况。
 
-The order matters: it is a *discipline*, not an iron law. Checking `intent` first keeps the human honest about their own contribution before blaming the model. But stopping at `intent` when the true cause is (3) turns "the AI hit its limit" into "I didn't phrase it well enough" — a miscalibration that wastes human effort re-specifying the un-specifiable. Attribute in order; accept the answer you find.
+顺序本身有含义:这是一种*纪律*,不是铁律。先查 `intent`,是让人在怪罪模型之前先对自己的投入诚实。但当真实原因是(3)时仍停在 `intent`,就会把「AI 到极限了」误判成「我没说清楚」——这种失准会让人白费力气去规约无法规约的东西。按顺序归因;接受你查到的答案。
 
-The distribution also steepens over time: by A1, the share of (3) and (4) shrinks monotonically — the stronger the model, the less often the ceiling is hit and the more of the surprises get foreseen. In the limit, the intent defect tends toward the only suspect: "a fully aligned first step leaves nothing to fail at verification" holds as an *asymptotic claim*. But on any given day, (3) and (4) still exist — which is exactly why the discipline of ordered attribution cannot be skipped.
+这个分布还随时间变陡:由 A1,(3) 与 (4) 的占比单调收缩——模型越强,天花板越少被撞到,意外越多被预见。极限处,intent 缺陷趋于唯一嫌疑,「第一步做得完全,验收就不会出问题」作为*渐近论断*成立。但在任何给定的今天,(3)、(4) 都还在——这正是归因纪律不可省略的原因。
 
-## 7. The verification gap, and verifiable-by-construction delivery
+## 7. 验证鸿沟,与「构造即可验」的交付
 
-The strongest objection to AI-led systems targets the `verdict` endpoint: **a human cannot verify what they can no longer understand.** As AI capability grows, unaided human verification weakens — this is the *scalable oversight problem*, and it is the load-bearing risk of this entire framework.
+对 AI 主导系统最有力的质疑指向 `verdict` 端点:**人无法验证自己已经看不懂的东西。** AI 能力越强,人的裸验证能力越弱——这就是*可扩展监督(scalable oversight)问题*,也是整个框架的承重风险。
 
-Human-engineering's answer is that verifiability is the **deliverer's** burden, not the verifier's:
+Human-engineering 的回答是:可验证性是**交付方**的义务,不是验收方的:
 
-**Every deliverable must be verifiable by construction.** The AI does not merely deliver the artifact; it delivers the artifact *plus* the means to check it: the load-bearing assumptions made, the evidence gathered, the checks already run and their results, and a legible account of what changed. A deliverable that can only be verified by re-doing the work is a defective deliverable, no matter how correct its content. And legibility is measured against the *actual* verifier — the accountable human in this loop, with their vocabulary and their expertise — not an idealized reader. A delivery its own verifier cannot understand is defective by construction; when that happens, diagnosing where it fails and re-delivering legibly is the deliverer's work, never the verifier's.
+**每一份交付物必须构造即可验(verifiable by construction)。** AI 交付的不只是产物,而是产物*加上*核验它的手段:所依赖的关键假设、收集到的证据、已经跑过的检查及其结果、一份人读得懂的改动说明。一份只能靠重做一遍才能核验的交付物,无论内容多正确,都是缺陷品。而「易读」以*真实的*验收者为准——就是这个环里担责的那个人,以他的词汇和专业背景为准——而不是以某个理想读者为准。连自己的验收者都读不懂的交付,构造上即为缺陷;此时,诊断它坏在哪里并重新交付一份读得懂的,是交付方的活,永远不是验收方的。
 
-Three supporting practices keep the human's verdict meaningful over time:
+三项配套实践让人的 `verdict` 长期有效:
 
-- **Derived checks** — the human verifies *properties* (tests pass, invariants hold, numbers reconcile) rather than re-reading everything; the AI is tasked to produce those checkable properties.
-- **Adversarial review** — a second, independent AI instance is tasked to refute the first's deliverable; the human arbitrates disagreements instead of auditing agreements.
-- **Calibrated spot-checks** — the human periodically deep-verifies a random sample end-to-end, to measure (not assume) how much trust the delegation deserves.
+- **派生检查** —— 人验证*性质*(测试通过、不变量成立、数字对得上),而不是重读一切;产出这些可检性质是 AI 的任务。
+- **对抗复核** —— 让第二个独立的 AI 实例去*驳倒*第一个的交付物;人仲裁分歧,而不是审计共识。
+- **校准抽检** —— 人定期随机抽样、端到端深查一次,用来*测量*(而非假设)这份委托值得多少信任。
 
-Note the symmetry with knowledge engineering: there, we structure *knowledge* so the AI can read it; here, the AI structures *results* so the human can verify them. Each side writes in the other's native format.
+注意它与知识工程的对称:那边,人把*知识*结构化到 AI 易读;这边,AI 把*成果*结构化到人易验。双方都用对方的母语写作。
 
-The gap also has a second face. The first is the human who *cannot* verify; the second is the human who *stops* verifying — approval fatigue turns the verdict endpoint into a rubber stamp long before any capability ceiling is reached. The countermeasures are the AI's to run, because in an AI-led system the human is a critical dependency whose health the AI must monitor: keep dispatch volume low enough that each verdict is an event, not a reflex; require verdicts with content on high-stakes items — a bare "ok" on an irreversible dispatch is itself a calibration warning; and treat uniformly fast approvals as evidence to sharpen the spot-check suggestions, never as trust earned.
+鸿沟还有第二副面孔。第一副是*无法*验证的人;第二副是*不再*验证的人——审批疲劳会让 verdict 端点退化成橡皮图章,远早于任何能力天花板到来。对策由 AI 来执行,因为在 AI 主导的系统里,人是一个关键依赖,其健康状况须由 AI 监控:把下发量压到足够低,让每一次 verdict 是一个事件而不是一个反射;高风险事项要求有内容的 verdict——对不可逆下发只回一句「没问题」,本身就是校准警报;把整齐划一的快速批准当作收紧抽查建议的证据,而永不当作挣得的信任。
 
-## 8. The maturity model
+## 8. 成熟度模型
 
-Adoption of human-engineering is graded by where the human sits in the loop. Trust — earned via the spot-check record of §7 — is what moves a system up a level; a failed verdict moves it down.
+Human-engineering 的采用程度,按人在环中的位置分级。信任——由 §7 的抽检记录挣得——推动系统升级;一次未通过的 `verdict` 使其降级。
 
-| Level | Name | Who leads | Human involvement |
+| 级别 | 名称 | 谁主导 | 人的介入 |
 |---|---|---|---|
-| HE-0 | Copilot | Human | Human does the work; AI assists inline. |
-| HE-1 | Executor | Human | Human decomposes the work; AI executes the pieces. |
-| HE-2 | Gated agent | AI (within a task) | AI executes whole tasks; human approves at every step-gate. |
-| HE-3 | **Human API** | **AI (within a goal)** | **Human appears only at the three endpoints: `intent`, `grant`, `verdict`.** |
-| HE-4 | Standing goals | AI (across goals) | Goals persist; the AI schedules work over time and dispatches to humans asynchronously as endpoints require. |
+| HE-0 | 副驾驶 | 人 | 人干活,AI 在旁辅助。 |
+| HE-1 | 执行器 | 人 | 人拆解工作,AI 执行各个碎片。 |
+| HE-2 | 带闸代理 | AI(任务内) | AI 执行完整任务,人在每道闸口审批。 |
+| HE-3 | **人类 API** | **AI(目标内)** | **人只出现在三个端点:`intent`、`grant`、`verdict`。** |
+| HE-4 | 常驻目标 | AI(跨目标) | 目标常驻;AI 跨时间调度工作,在需要端点时异步召唤人。 |
 
-Most of today's industry operates at HE-0 through HE-2 — and most of what is sold as "AI transformation" is HE-1 with better marketing. **Human-engineering proper begins at HE-3**: the point where the human stops managing the process and starts serving as its authority interface. HE-4 is the same contract extended across time — the AI holds standing goals and pings its humans when an endpoint is needed, which is how "AI dispatches tasks to humans" becomes literal daily practice.
+今天的业界大多运行在 HE-0 到 HE-2——而市面上大部分所谓「AI 转型」,不过是包装更好的 HE-1。**Human-engineering 真正始于 HE-3**:人不再管理过程,转而充当过程的权柄接口。HE-4 是同一契约在时间维度上的延伸——AI 持有常驻目标,在需要端点时召唤它的人类,「AI 给人派任务」在此成为字面意义上的日常。
 
-The checkpoint schedule is dynamic by design: new domain or new stakes → more `grant` gates and denser spot-checks; accumulating clean verdicts → fewer gates, coarser checks. Autonomy is never *given*; it is *measured into existence*.
+检查点的排布天然是动态的:新领域、高风险 → 更多 `grant` 闸口、更密的抽检;干净的 `verdict` 不断累积 → 闸口减少、检查变粗。自主性从不是*被授予*的,而是*被测量出来*的。
 
-## 9. Conclusion
+## 9. 结论
 
-Harness engineering was the discipline of the decade's first half: humans learned to build environments in which AI works reliably. Its very success creates the successor problem. Once the harness is good enough, the AI leads the workflow — and the unengineered component left in the system is the human.
+Harness 工程是这个十年上半场的学科:人类学会了搭建让 AI 可靠工作的环境。而它的成功恰恰制造了下一个问题:harness 一旦够好,AI 就开始主导工作流——系统里剩下的那个未经工程化的组件,是人。
 
-Human-engineering states the resolution plainly:
+Human-engineering 把解答说清楚:
 
-- The human's job collapses to three endpoints: **align the goal, grant the capability, verify the result.**
-- The AI's obligations expand to match: **steward every decision the work touches, dispatch tasks engineered for human attention, and deliver results verifiable by construction.**
-- Authority and accountability never move. Initiative does — and it moves to the AI.
+- 人的工作坍缩为三个端点:**对齐目标、授予能力、验收成果。**
+- AI 的义务相应扩张:**统筹工作触及的每一个决策,下发为人的注意力而工程化的任务,交付构造即可验的成果。**
+- 权柄与问责从不移动。移动的是发起权——它移向 AI。
 
-The inversion is not a loss of human control; it is the *precise engineering* of human control. A human who reviews five well-evidenced dispatches a day governs more, not less, than one who micro-manages five hundred prompts. The endpoint of this discipline is a system in which humans stop working *for* their tools and stop working *as* managers of their tools — and instead occupy the only three seats that were ever irreducibly theirs.
+这场翻转不是人类失去控制,而是人类控制的*精确工程化*。一个每天复核五份带足证据的下发的人,比一个微观管理五百条提示词的人,治理得更多,而不是更少。这门学科的终点,是一个这样的系统:人不再*为*工具打工,也不再*充当*工具的经理——而是坐进从始至终只属于人的那三把椅子。
 
-One boundary, stated plainly: this document describes the smallest complete unit — one human, one AI, one standing goal. Organizations are many such units stacked together, and the stacking raises questions a single unit cannot answer: who owns `intent` when several humans disagree, how requests from many AIs compete for one human's attention, and who answers for what when there are many signers. That is the discipline's open frontier; the single unit had to be specified first.
+有一条边界要说在明处:本文描述的是最小完整单元——一个人、一个 AI、一个常驻目标。组织是许多这样的单元叠在一起,而叠加会提出单个单元答不了的问题:几个人意见相左时 `intent` 归谁,多个 AI 的请求如何争夺同一个人的注意力,签字的人有很多时由谁负责。这些是这门学科的开放前沿;但单个单元必须先被定义。
 
 ---
 
-## Reference implementation
+## 参考实现
 
-This repository ships the protocol as a working [Claude Code skill](./skill/SKILL.md): it enforces Phase-gated execution — `intent` alignment (no execution while disagreement remains), five-field dispatches for every human ask, verifiable-by-construction delivery, a hard verdict gate before irreversible actions, and ordered failure attribution.
+本仓库附带协议的可运行实现——一个 [Claude Code skill](./skill/SKILL.md):强制分阶段执行——`intent` 对齐(有异议不执行)、每次请求人类必带五字段下发、构造即可验交付、不可逆动作前的硬性 verdict 闸口、按序失败归因。
 
-Install (user-level, all projects):
+安装(用户级,所有项目生效):
 
 ```bash
 mkdir -p ~/.claude/skills/human-engineering
@@ -188,24 +188,24 @@ curl -fsSL https://raw.githubusercontent.com/HarveyYa/human-engineering/main/ski
   -o ~/.claude/skills/human-engineering/SKILL.md
 ```
 
-Then invoke with `/human-engineering <task>`, or let the model enter it automatically for major, multi-step, or irreversible work.
+之后用 `/human-engineering <任务>` 调用,或由模型在重大、多步骤、不可逆任务时自动进入。
 
-## Related work
+## 相关工作
 
-Human-engineering synthesizes four existing threads and names their sum:
+Human-engineering 综合了四条既有线索,并为其总和命名:
 
-- **Harness engineering** — the "Agent = Model + Harness" formulation and the 2026 shift of focus from agents to their harnesses: [2025 Was Agents. 2026 Is Agent Harnesses.](https://aakashgupta.medium.com/2025-was-agents-2026-is-agent-harnesses-heres-why-that-changes-everything-073e9877655e), [Agent Harness Engineering — The Rise of the AI Control Plane](https://medium.com/@adnanmasood/agent-harness-engineering-the-rise-of-the-ai-control-plane-938ead884b1d), [What Is Harness Engineering?](https://atlan.com/know/what-is-harness-engineering/)
-- **AI-to-human task delegation** — principal-agent analyses where the AI is the delegating principal, with empirical evidence that AI-led delegation can outperform human-led: [Task delegation from AI to humans: A principal-agent perspective](https://www.researchgate.net/publication/374420256_Task_delegation_from_AI_to_humans_A_principal-agent_perspective), [Authenticated Delegation and Authorized AI Agents](https://arxiv.org/html/2501.09674v1)
-- **Scalable oversight** — the verification gap and its countermeasures: [Scalable Oversight (LessWrong)](https://www.lesswrong.com/w/scalable-oversight), [Human-AI Complementarity: A Goal for Amplified Oversight (DeepMind)](https://deepmindsafetyresearch.medium.com/human-ai-complementarity-a-goal-for-amplified-oversight-0ad8a44cae0a), [How to Evaluate AI that's Smarter than Us (ACM Queue)](https://queue.acm.org/detail.cfm?id=3722043)
-- **Graduated autonomy** — staged autonomy levels and checkpoint-based trust: [Autonomy Levels for Agentic AI (CSA)](https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy), [Five levels of AI coding agent autonomy (Swarmia)](https://www.swarmia.com/blog/five-levels-ai-agent-autonomy/)
+- **Harness 工程** —— 「Agent = Model + Harness」公式,及 2026 年焦点从 agent 转向 harness:[2025 Was Agents. 2026 Is Agent Harnesses.](https://aakashgupta.medium.com/2025-was-agents-2026-is-agent-harnesses-heres-why-that-changes-everything-073e9877655e)、[Agent Harness Engineering — The Rise of the AI Control Plane](https://medium.com/@adnanmasood/agent-harness-engineering-the-rise-of-the-ai-control-plane-938ead884b1d)、[What Is Harness Engineering?](https://atlan.com/know/what-is-harness-engineering/)
+- **AI 向人委派任务** —— 以 AI 为委托方的委托-代理分析,并有实证表明 AI 主导的委派可以优于人主导:[Task delegation from AI to humans: A principal-agent perspective](https://www.researchgate.net/publication/374420256_Task_delegation_from_AI_to_humans_A_principal-agent_perspective)、[Authenticated Delegation and Authorized AI Agents](https://arxiv.org/html/2501.09674v1)
+- **可扩展监督** —— 验证鸿沟及其对策:[Scalable Oversight(LessWrong)](https://www.lesswrong.com/w/scalable-oversight)、[Human-AI Complementarity: A Goal for Amplified Oversight(DeepMind)](https://deepmindsafetyresearch.medium.com/human-ai-complementarity-a-goal-for-amplified-oversight-0ad8a44cae0a)、[How to Evaluate AI that's Smarter than Us(ACM Queue)](https://queue.acm.org/detail.cfm?id=3722043)
+- **分级自主性** —— 阶梯式自主级别与基于检查点的信任:[Autonomy Levels for Agentic AI(CSA)](https://cloudsecurityalliance.org/blog/2026/01/28/levels-of-autonomy)、[Five levels of AI coding agent autonomy(Swarmia)](https://www.swarmia.com/blog/five-levels-ai-agent-autonomy/)
 
-## Provenance
+## 缘起
 
-This document was produced under its own protocol: a human set the goal, granted the permissions (tooling, network, repository), and verified the result; the AI researched, formulated, and wrote the theory, and dispatched to the human only what required their authority. The first draft's misalignment was traced — per §6, rule 1 — to an under-specified `intent`, corrected, and re-executed. The stewardship obligation (§5) was likewise earned, not invented: the human's spot-check caught exactly such a silently-made decision — a license carried unexamined across a scope change — and the incident was generalized into protocol. The compile duty (§3) followed the same path: it entered the theory when the human asked whether a leading AI ought to correct the very instructions it receives. And the legibility law in §7 exists because the human said "parts of this I can't understand" — a verdict that, by §7's own logic, indicted the document rather than the reader — and then pointed out that asking him to locate the unclear passages was itself a violation: diagnosing a defective delivery is the deliverer's work. The fix became law and inline glosses, not a longer document. The three alignment-process rules (written spec, research first, guide-and-echo), the ownership of means, and asymptotic attribution (v1.5) took the same road: they arrived as a single statement of direction from the human — compiled per §3, its increments adopted, and its one clause conflicting with §6 ("a fully aligned first step leaves nothing to fail") surfaced and, by the human's ruling, landed as an asymptotic claim rather than an absolute one.
+本文档在它自己的协议下产出:人对齐目标、授予权限(工具、网络、仓库)、验收成果;AI 调研、立论、成文,只把需要人类权柄的事项下发给人。初稿的偏差按 §6 第 1 条追溯为 `intent` 欠定义,修正后重新执行。统筹义务(§5)同样是挣来的、不是发明的:人类的一次抽检恰好抓到了这样一个无声决策——一个跨越范围变更、未经重审的许可证——该事件随即被泛化为协议。编译义务(§3)走的是同一条路:它进入理论,源于人类问出「主导的 AI 是否应该纠正它所接收的指令本身」。而 §7 的易读法则,源于人类说出「有些地方我看不懂」——按 §7 自身的逻辑,这个 verdict 判的是文档而不是读者——以及他随后指出:让他去定位看不懂的段落,本身就是违规——诊断有缺陷的交付,是交付方的活。修复最终落成了法则与行内注解,而不是一份更长的文档。对齐过程三规则(成文 spec、先调研、引导回显)、选型归属与渐近归因(v1.5)同样如此:它们来自人类的一次方向陈述——该陈述按 §3 被编译,增量被采纳,而其中与 §6 冲突的一句(「第一步做得完全,验收就不会有问题」)被浮出、经人类裁决后落为渐近论断,而非绝对条款。
 
-## License
+## 许可证
 
-Dual-licensed by artifact type:
+按产物类型双许可:
 
-- **The theory** (README documents): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — free to use and share, with attribution.
-- **The reference implementation** ([`skill/`](./skill/)): [MIT](./skill/LICENSE) — zero-friction adoption, embed it anywhere.
+- **理论**(README 文档):[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) —— 可自由使用与传播,须署名。
+- **参考实现**([`skill/`](./skill/)):[MIT](./skill/LICENSE) —— 零阻力采用,可嵌入任何项目。
